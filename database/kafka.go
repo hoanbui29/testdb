@@ -11,9 +11,9 @@ import (
 
 func GetKafkaConsumer(partition int) *kafka.Reader {
 	consumer := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{fmt.Sprintf("%s:%d", viper.GetString("base.host"), viper.GetInt("kafka.port"))},
-		Topic:     viper.GetString("kafka.topic"),
-		GroupID:   viper.GetString("kafka.consumer.group_id"),
+		Brokers: []string{fmt.Sprintf("%s:%d", viper.GetString("base.host"), viper.GetInt("kafka.port"))},
+		Topic:   viper.GetString("kafka.topic"),
+		// GroupID:   viper.GetString("kafka.consumer.group_id"),
 		Partition: partition,
 		MaxBytes:  10e8,
 	})
