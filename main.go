@@ -15,16 +15,17 @@ func main() {
 	}
 	pgDb := database.OpenPg()
 	redis := database.OpenRedis()
-	consumer := database.GetKafkaConsumer()
-	defer consumer.Close()
 	defer pgDb.Close()
 	defer redis.Close()
 	var wg sync.WaitGroup
 
-	//1000 goroutines to process messages
-	for i := 0; i < 1000; i++ {
+	//6 goroutines to process messages
+	for i := 0; i < 6; i++ {
 		wg.Add(1)
-		go func() {
+		latestOffset := database.GetLatestOffset(i)
+		go func(partition int, latestOffset int64) {
+			consumer := database.GetKafkaConsumer(partition)
+			defer consumer.Close()
 			defer wg.Done()
 			for {
 				m, err := consumer.ReadMessage(context.Background())
@@ -33,8 +34,12 @@ func main() {
 					break
 				}
 				utils.ProcessMessage(pgDb, redis, m.Value)
+				if m.Offset >= latestOffset {
+					log.Printf("Partition %d has finished processing at offset %d", partition, m.Offset)
+					break
+				}
 			}
-		}()
+		}(i, latestOffset)
 	}
 
 	wg.Wait()

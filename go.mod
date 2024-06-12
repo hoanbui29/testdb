@@ -7,10 +7,10 @@ require (
 	github.com/redis/go-redis/v9 v9.5.3
 	github.com/segmentio/kafka-go v0.4.47
 	github.com/spf13/viper v1.19.0
+	google.golang.org/protobuf v1.34.2
 )
 
 require (
-	github.com/brianvoe/gofakeit/v7 v7.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
@@ -32,7 +32,6 @@ require (
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
